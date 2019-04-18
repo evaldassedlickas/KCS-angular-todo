@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 class Domain {
   static HOST = 'http://localhost:8080';
@@ -18,20 +17,29 @@ class Api {
 })
 export class ToDoService {
 
-  items: Observable<TodoItemDTO[]>;
+  items: TodoItemDTO[] = [];
 
   constructor(
     private http: HttpClient
   ) {
   }
 
-  create(label: string): TodoItemDTO {
+  create(label: string): void {
+     this.http.post<TodoItemDTO>(
+      Api.ITEM_CREATE,
+      null,
+      {params: {label}}).subscribe((response: TodoItemDTO) => {
+      this.items.push(response);
+    });
 
-    return null;
   }
 
-   read(): Observable<TodoItemDTO[]> {
-    this.items =  this.http.get<TodoItemDTO[]>(Api.ITEM_READ);
+  read(): TodoItemDTO[] {
+    this.http.get<TodoItemDTO[]>(Api.ITEM_READ).subscribe((response: TodoItemDTO[]) => {
+      response.forEach((item) => {
+        this.items.push(item);
+      });
+    });
 
     return this.items;
   }
