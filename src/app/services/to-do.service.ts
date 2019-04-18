@@ -25,12 +25,13 @@ export class ToDoService {
   }
 
   create(label: string): void {
-     this.http.post<TodoItemDTO>(
+    this.http.post<TodoItemDTO>(
       Api.ITEM_CREATE,
       null,
-      {params: {label}}).subscribe((response: TodoItemDTO) => {
-      this.items.push(response);
-    });
+      {params: {label}})
+      .subscribe((response: TodoItemDTO) => {
+        this.items.push(response);
+      });
 
   }
 
@@ -49,9 +50,15 @@ export class ToDoService {
     return null;
   }
 
-  delete(id: number): TodoItemDTO {
-
-    return null;
+  delete(id: number): void {
+    this.http.delete<TodoItemDTO>(
+      Api.ITEM_DELETE,
+      {params: {id: id.toString()}})
+      .subscribe((response: TodoItemDTO) => {
+        const i = this.items.findIndex((element) => {
+          return element.id === response.id;
+        });
+        this.items.splice(i, 1);
+      });
   }
-
 }

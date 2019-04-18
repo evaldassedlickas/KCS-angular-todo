@@ -1,3 +1,4 @@
-<p>
-  {{dtoValue.label}}
-</p>
+<div>
+  <input type="checkbox" [checked]="dtoValue.isDone" />{{dtoValue.label}}
+  <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+</div>

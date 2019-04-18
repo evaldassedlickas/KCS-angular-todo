@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ToDoService} from '../services/to-do.service';
 
 @Component({
   selector: 'app-to-do-item',
@@ -9,10 +10,13 @@ export class ToDoItemComponent implements OnInit {
 
   @Input() dtoValue: TodoItemDTO;
 
-  constructor() {
+  constructor(private toDoService: ToDoService) {
   }
 
   ngOnInit() {
   }
 
+  onDelete() {
+    this.toDoService.delete(this.dtoValue.id);
+  }
 }
