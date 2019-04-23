@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ToDoService} from './services/to-do.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import {ToDoService} from './services/to-do.service';
 export class AppComponent {
 
   title = 'to-do-app';
-  items: TodoItemDTO[];
+  items: Observable<TodoItemDTO[]>;
 
   model = {
     todoInput: ''

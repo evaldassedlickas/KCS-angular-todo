@@ -8,7 +8,7 @@
 </div>
 <div>
   <app-to-do-item
-    *ngFor="let item of items"
+    *ngFor="let item of items | async"
     [dtoValue]="item"
   ></app-to-do-item>
 </div>

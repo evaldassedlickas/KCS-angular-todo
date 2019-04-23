@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 class Domain {
   static HOST = 'http://localhost:8080';
@@ -17,7 +18,7 @@ class Api {
 })
 export class ToDoService {
 
-  items: TodoItemDTO[] = [];
+  items: Observable<TodoItemDTO[]> = null;
 
   constructor(
     private http: HttpClient
@@ -28,19 +29,12 @@ export class ToDoService {
     this.http.post<TodoItemDTO>(
       Api.ITEM_CREATE,
       null,
-      {params: {label}})
-      .subscribe((response: TodoItemDTO) => {
-        this.items.push(response);
-      });
+      {params: {label}});
 
   }
 
-  read(): TodoItemDTO[] {
-    this.http.get<TodoItemDTO[]>(Api.ITEM_READ).subscribe((response: TodoItemDTO[]) => {
-      response.forEach((item) => {
-        this.items.push(item);
-      });
-    });
+  read(): Observable<TodoItemDTO[]> {
+    this.items = this.http.get<TodoItemDTO[]>(Api.ITEM_READ);
 
     return this.items;
   }
@@ -53,12 +47,6 @@ export class ToDoService {
   delete(id: number): void {
     this.http.delete<TodoItemDTO>(
       Api.ITEM_DELETE,
-      {params: {id: id.toString()}})
-      .subscribe((response: TodoItemDTO) => {
-        const i = this.items.findIndex((element) => {
-          return element.id === response.id;
-        });
-        this.items.splice(i, 1);
-      });
+      {params: {id: id.toString()}});
   }
 }
