@@ -19,4 +19,8 @@ export class ToDoItemComponent implements OnInit {
   onDelete() {
     this.toDoService.delete(this.dtoValue.id);
   }
+
+  handleCheckChanged() {
+    this.toDoService.update(this.dtoValue.id, this.dtoValue.label, !this.dtoValue.done)
+  }
 }

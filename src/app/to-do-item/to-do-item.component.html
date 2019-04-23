@@ -1,4 +1,4 @@
 <div>
-  <input type="checkbox" [checked]="dtoValue.isDone" />{{dtoValue.label}}
+  <input type="checkbox" [checked]="dtoValue.done" (click)="handleCheckChanged()" />{{dtoValue.label}}
   <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
 </div>
